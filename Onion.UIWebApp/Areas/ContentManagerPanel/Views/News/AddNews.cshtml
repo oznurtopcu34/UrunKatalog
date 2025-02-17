@@ -1,0 +1,155 @@
+﻿@model Onion.UIWebApp.Models.News_VM
+@{
+    ViewData["Title"] = "AddNews";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <form asp-action="AddNews" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label fancy-label">Başlık</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Content" class="control-label fancy-label">İçerik</label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContentCategoryID" class="control-label fancy-label">Kategori</label>
+                <select asp-for="ContentCategoryID" class="form-control" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="ContentCategoryID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Image" class="control-label fancy-label">Haber Resmi</label>
+                <input asp-for="Image" type="file" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Yayınla" class="btn btn-gradient" />
+            </div>
+
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-link fancy-btn-link">Listeye Dön</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f8ff;
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .control-label.fancy-label {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .control-label.fancy-label::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: seagreen;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .control-label.fancy-label:hover::before {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+        width: 100%;
+        margin-top: 5px;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: seagreen;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.8);
+        }
+
+    .btn-gradient {
+        background-color: seagreen;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .fancy-btn-link {
+        color: balck;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background-color: yellow;
+        display: inline-block;
+    }
+
+        .fancy-btn-link:hover {
+            color: black;
+            background-color: blue;
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
+            transform: scale(1.05);
+        }
+
+    .row {
+        margin-top: 50px;
+    }
+</style>

@@ -1,0 +1,138 @@
+﻿@model Onion.UIWebApp.Models.ProductAdd_VM
+
+@{
+    ViewData["Title"] = "Ürün Ekle";
+}
+
+<style>
+
+    body {
+        background-color: #e3f2fd; /* Açık mavi tonu */
+    }
+
+    .custom-input {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        padding: 15px;
+        border: 2px solid #ced4da;
+        background-color: #f8f9fa;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+        .custom-input:focus {
+            border-color: #007bff;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+
+    /* Gradient Buton */
+    .btn-gradient {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+
+    /* Kart Gölgelendirme ve Margin */
+    .card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Daha belirgin gölge */
+        padding: 30px;
+    }
+
+    /* Başlık için stil */
+
+
+
+    h2 {
+        background-color: yellow;
+        color: black;
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        border: 2px solid black;
+        margin: 0 auto;
+        font-size: 18px;
+    }
+
+</style>
+
+<div class="container my-5">
+    <div class="card shadow-lg p-4 rounded-lg">
+        <h2 class="custom-title">Ürün Ekle</h2>
+
+        <form asp-action="AddProduct" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="font-weight-bold text-muted">Ürün Adı</label>
+                        <input asp-for="ProductName" class="form-control custom-input" placeholder="Ürün adı girin" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        <label asp-for="Price" class="font-weight-bold text-muted">Fiyat</label>
+                        <input asp-for="Price" class="form-control custom-input" placeholder="Fiyat girin" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Description" class="font-weight-bold text-muted">Açıklama</label>
+                <textarea asp-for="Description" class="form-control custom-input" rows="4" placeholder="Ürünü açıklayın..."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        <label asp-for="Stock" class="font-weight-bold text-muted">Stok Adedi</label>
+                        <input asp-for="Stock" class="form-control custom-input" placeholder="Stok sayısı girin" />
+                        <span asp-validation-for="Stock" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="form-group">
+                        <label asp-for="CategoryID" class="font-weight-bold text-muted">Kategori</label>
+                        <select asp-for="CategoryID" class="form-control custom-input" asp-items="ViewBag.Categories">
+                            <option value="">Kategori Seçin</option>
+                        </select>
+                        <span asp-validation-for="CategoryID" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label asp-for="Image" class="font-weight-bold text-muted">Ürün Resmi</label>
+                <input asp-for="Image" type="file" class="form-control custom-input" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-gradient">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

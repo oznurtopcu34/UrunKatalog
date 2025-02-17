@@ -1,0 +1,148 @@
+﻿@model Onion.Application.Model.DTO_s.UserLogin_DTO
+
+@{
+    ViewData["Title"] = "User Login";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+<style>
+    body {
+        background-image: url('https://img.freepik.com/premium-photo/product-package-boxes-shopping-bag-cart-with-laptop-online-shopping-delivery-concept_38716-138.jpg?w=996');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        font-family: 'Arial', sans-serif;
+        color: #333;
+    }
+
+    h1 {
+        font-size: 2.5rem; /* Font size */
+        color: #fff; /* Color */
+        font-weight: bold; /* Bold text */
+        margin-bottom: 20px; /* Bottom margin */
+        text-align: center; /* Center aligned text */
+        text-transform: uppercase; /* Uppercase */
+        letter-spacing: 2px; /* Increase letter spacing */
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Shadow effect */
+        transition: transform 0.3s, color 0.3s; /* Transition effect */
+    }
+
+        /* Hover effect */
+        h1:hover {
+            color: yellow; /* Change color on hover */
+            transform: scale(1.05); /* Slightly grow on hover */
+        }
+
+    .login-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+    }
+
+        .login-container:hover {
+            transform: scale(1.02);
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .input-group {
+        display: flex; /* Use flexbox */
+        align-items: center; /* Vertical alignment */
+    }
+
+    .input-group-text {
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        border-radius: 5px 0 0 5px;
+        font-size: 1.5rem; /* Icon size */
+        padding: 0.5rem; /* Inner padding */
+        display: flex; /* Flexbox to center the icon */
+        justify-content: center; /* Center align */
+        align-items: center; /* Vertical center */
+        height: 45px; /* Height setting */
+    }
+
+    .form-control {
+        height: 45px; /* Input field height */
+        font-size: 16px; /* Font size */
+        border-radius: 0 5px 5px 0; /* Right border radius */
+        margin-left: -1px; /* No space between input field and icon */
+        padding: 0 10px; /* Inner padding */
+    }
+
+    .btn {
+        background-color: yellow;
+        color: black;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        transition: background-color 0.3s, transform 0.2s;
+        width: 100%;
+    }
+
+    .btn-link {
+        text-decoration: none; /* Altındaki çizin kaldırır */
+    }
+
+        .btn-link:hover {
+            color: black; /* Üzerine gelindiğinde aynı rengi korur */
+            text-decoration: none; /* Altını çizmeyi kaldır */
+        }
+
+    .btn:hover {
+        background-color: #3b5b9a;
+        transform: translateY(-2px);
+    }
+</style>
+
+<h1 class="text-center mb-5">Üye Girişi</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-lg p-4 login-container">
+
+
+                <form asp-action="LoginUser" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="UserNameOrEmail" class="control-label">Kullanıcı Adı veya Mail</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input asp-for="UserNameOrEmail" class="form-control" />
+                        </div>
+                        <span asp-validation-for="UserNameOrEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Şifre</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input asp-for="Password" class="form-control" type="password" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <input type="submit" value="Giriş" class="btn" />
+                    </div>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a asp-action="AddUser" class="btn btn-link">Üye Ol</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

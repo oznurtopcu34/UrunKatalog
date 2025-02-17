@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Onion.Domain.Models
+
+@inject UserManager<User> UserManager
+
+@{
+    var user = UserManager.GetUserAsync(User).Result;
+}
+
+<style>
+    .btn-primary:hover, .btn-secondary:hover, .btn-danger:hover {
+        opacity: 0.8;
+        transition: opacity 0.3s ease, transform 0.2s ease;
+        transform: scale(1.05);
+        color: #ffffff !important;
+    }
+
+    .btn-primary:hover {
+        background-color: #ffca28;
+    }
+
+    .btn-secondary:hover {
+        background-color: #80deea;
+    }
+
+    .btn-danger:hover {
+        background-color: #01579b;
+    }
+
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+        .btn-container a {
+            margin: 0;
+            padding: 10px 15px;
+            border-radius: 0; /* Orta butonlar düz kalacak */
+        }
+
+            /* İlk butonun sadece sol kenarını yuvarlat */
+            .btn-container a:first-child {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+
+            /* Son butonun sadece sağ kenarını yuvarlat */
+            .btn-container a:last-child {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+                margin-left: -1px; /* Butonları yapıştırmak için */
+            }
+</style>
+
+<body style="background-color: #e0f7fa;">
+
+    @if (user == null)
+    {
+        <div class="btn-container">
+            <a asp-area="" asp-controller="User" asp-action="LoginUser" class="btn btn-primary" style="background-color: yellow; color: #000000; border-right: 1px solid #000;">Giriş Yap</a>
+            <a asp-area="" asp-controller="User" asp-action="AddUser" class="btn btn-secondary" style="background-color: yellow; color: #000000;">Yeni Üye</a>
+        </div>
+    }
+    else
+    {
+        <h5 class="text-primary" style="text-align: left; margin-left: 20px; color: #000000;">Hoşgeldiniz @User.Identity.Name</h5>
+
+        @if (UserManager.IsInRoleAsync(user, "User").Result)
+        {
+            <a asp-area="UserPanel" asp-controller="Panel" asp-action="Index" class="btn btn-secondary" style="display: block; margin: 5px 20px; text-align: left; background-color: #80deea; color: #000000;">Üye Paneli</a>
+        }
+        else if (UserManager.IsInRoleAsync(user, "Manager").Result)
+        {
+            <a asp-area="ManagerPanel" asp-controller="Panel" asp-action="Index" class="btn btn-secondary" style="display: block; margin: 5px 20px; text-align: left; background-color: #80deea; color: #000000;">Yönetici Paneli</a>
+        }
+        else if (UserManager.IsInRoleAsync(user, "ContentManager").Result)
+        {
+            <a asp-area="ContentManagerPanel" asp-controller="Panel" asp-action="Index" class="btn btn-secondary" style="display: block; margin: 5px 20px; text-align: left; background-color: #90deea; color: #000000;">İçerik Yönetimi Paneli</a>
+        }
+        else if (UserManager.IsInRoleAsync(user, "CustomerService").Result)
+        {
+            <a asp-area="CustomerServicePanel" asp-controller="Panel" asp-action="Index" class="btn btn-secondary" style="display: block; margin: 5px 20px; text-align: left; background-color: #80deea; color: #000000;">Müşteri Hizmetleri Paneli</a>
+        }
+
+        <form method="post" asp-area="" asp-controller="User" asp-action="LogoutUser" style="margin: 10px 20px; text-align: left;">
+            <input type="submit" value="Çıkış" class="btn btn-danger" style="background-color: #0288d1; color: #000000;" />
+        </form>
+    }
+
+</body>

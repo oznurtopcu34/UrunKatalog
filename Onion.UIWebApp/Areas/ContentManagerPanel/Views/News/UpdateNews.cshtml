@@ -1,0 +1,155 @@
+﻿@model Onion.UIWebApp.Models.NewsUpdate_VM
+
+@{
+    ViewData["Title"] = "Haber Güncelle";
+}
+
+<div class="update-container">
+    <h2 class="page-title">
+        <i class="fas fa-edit"></i> Haber Güncelle
+    </h2>
+
+    <form asp-action="UpdateNews" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label asp-for="NewsID" class="control-label fancy-label">Haber ID</label>
+            <input asp-for="NewsID" class="form-control" readonly />
+            <span asp-validation-for="NewsID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label fancy-label">Başlık</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="control-label fancy-label">İçerik</label>
+            <textarea asp-for="Content" class="form-control"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ContentCategoryID" class="control-label fancy-label">Kategori</label>
+            <select asp-for="ContentCategoryID" class="form-control" asp-items="ViewBag.Categories"></select>
+            <span asp-validation-for="ContentCategoryID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Image" class="control-label fancy-label">Haber Resmi</label>
+            <input asp-for="Image" type="file" class="form-control" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-gradient">Güncelle</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        color: #333;
+    }
+
+    .update-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .page-title {
+        font-size: 28px;
+        background-color: yellow;
+        color: #333;
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 15px;
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        position: relative;
+    }
+
+        .page-title i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            color: seagreen;
+        }
+
+    .form-group {
+        margin-bottom: 12px; /* Daha yakınlaştırdım */
+    }
+
+    label.control-label.fancy-label {
+        font-size: 1.2rem; /* Biraz daha küçük font boyutu */
+        color: #2c3e50;
+        font-weight: bold;
+        letter-spacing: 1px;
+        display: inline-block;
+        margin-bottom: 5px; /* Daha küçük boşluk */
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+        width: 100%;
+        margin-top: 5px;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: seagreen;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.8);
+        }
+
+    .btn-gradient {
+        background-color: seagreen;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+        width: 100%;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .text-danger {
+        font-size: 0.9rem;
+        color: #e74c3c;
+    }
+
+    .fancy-btn-link {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 20px;
+        border-radius: 30px;
+        display: inline-block;
+        background-color: #f0f8ff;
+        transition: all 0.3s ease;
+    }
+
+        .fancy-btn-link:hover {
+            color: white;
+            background-color: #3498db;
+            transform: scale(1.05);
+        }
+</style>

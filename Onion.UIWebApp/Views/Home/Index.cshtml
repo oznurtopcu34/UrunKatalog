@@ -1,0 +1,176 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ö.N.E TEKNOLOJİ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            color: #333;
+            background-color: #e0f7fa; /* Açık mavi arka plan */
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #00796b; /* Koyu yeşil başlık */
+            font-size: 2.5rem;
+        }
+
+        .table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            font-size: 18px; /* Yazı boyutunu artırdık */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #ffffff; /* Beyaz arka plan */
+        }
+
+            .table th, .table td {
+                border: 1px solid #ddd; /* Açık gri kenarlık */
+                padding: 20px; /* İç boşlukları artırdık */
+                text-align: center;
+                vertical-align: middle;
+                transition: background-color 0.3s;
+                color: #333; /* Koyu yazı rengi */
+            }
+
+            .table th {
+                background-color: #ffd740; /* Sarı başlık arka planı */
+                font-weight: bold;
+                font-size: 20px; /* Başlık yazı boyutunu artırdık */
+            }
+
+            .table tr:nth-child(even) {
+                background-color: #f1f8e9; /* Açık yeşil arka plan */
+            }
+
+            .table tr:nth-child(odd) {
+                background-color: #e8f5e9; /* Daha açık yeşil arka plan */
+            }
+
+            .table tr:hover {
+                background-color: #b2dfdb; /* Hafif mavi ile vurgulama */
+            }
+
+        .img-container {
+            position: relative;
+        }
+
+        .img-thumbnail {
+            max-width: 150px; /* Resim boyutunu artırdık */
+            max-height: 150px;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+            .img-thumbnail:hover {
+                transform: scale(1.1);
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            }
+
+        .product-details {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border: 1px solid #000;
+            border-radius: 5px;
+            padding: 15px; /* Daha fazla iç boşluk */
+            z-index: 10;
+            width: 220px; /* Kutucuğun genişliğini artır */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px; /* Ürün detay yazı boyutunu artırdık */
+        }
+
+        .img-container:hover .product-details {
+            display: block;
+        }
+
+        .button-link {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff; /* Mavi buton */
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            display: inline-block;
+            font-size: 16px; /* Buton yazı boyutunu artırdık */
+        }
+
+            .button-link:hover {
+                background-color: #0056b3; /* Koyu mavi hover efekti */
+            }
+
+
+        {
+            width: 100%; /* Küçük ekranlar için tam genişlik */
+        }
+
+        h1 {
+            font-size: 2rem; /* Başlık boyutunu küçült */
+        }
+
+        .img-thumbnail {
+            max-width: 100px; /* Daha küçük resim boyutu */
+            max-height: 100px;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Ö.N.E TEKNOLOJİ</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ürün ID</th>
+                <th>Resim</th>
+                <th>Ürün Adı</th>
+                <th>Fiyat</th>
+                <th>Detay</th>
+                <th>Teklif</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+                    <td>
+                        <div class="img-container">
+                            <img src="~/Images/@item.Image" alt="Kapak Resmi" class="img-thumbnail" />
+                            <div class="product-details">
+                                <strong>Ürün Adı:</strong> @item.ProductName<br />
+                                <strong>Fiyat:</strong> @item.Price<br />
+                                <strong>Stok:</strong> @item.Stock
+                            </div>
+                        </div>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>
+                        @Html.ActionLink("Detay", "ProductDetail", new { id = item.ProductID }, new { @class = "button-link" })
+                    </td>
+                    <td>
+                        <a asp-action="PlaceBid" asp-controller="Bid" asp-route-productId="@item.ProductID" class="btn btn-success">
+                            Teklif Et
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

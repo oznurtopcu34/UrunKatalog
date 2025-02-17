@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.Bid_DTO>
+
+<div class="container">
+    <h2 class="admin-title">📜 Teklif Yönetimi</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="card">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Ürün ID</th>
+                    <th>Teklif Fiyatı</th>
+                    <th>Ad Soyad</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bid in Model)
+                {
+                    <tr>
+                        <td>@bid.ProductID</td>
+                        <td>@bid.OfferedPrice ₺</td>
+                        <td>@bid.Name</td>
+                        <td>@bid.Email</td>
+                        <td>@bid.Phone</td>
+                        <td>
+                            <a class="btn btn-gradient" href="/Home/ProductDetail/@bid.ProductID">Ürünü Gör</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #eaf6fd; /* Pastel mavi tonu */
+        color: #333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .admin-title {
+        background-color: yellow;
+        color: black;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin: 20px auto;
+        display: block;
+        width: fit-content;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+    }
+
+    .table {
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+        .table thead {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    .btn-gradient {
+        background: linear-gradient(45deg, black, #fad0c4);
+        border: none;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+</style>

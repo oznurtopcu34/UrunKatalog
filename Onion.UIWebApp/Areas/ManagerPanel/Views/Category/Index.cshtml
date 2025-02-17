@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.Category_DTO>
+
+@{
+    ViewData["Title"] = "Kategori Listesi";
+}
+
+<h1 class="admin-title">Kategori Listesi</h1>
+
+<p class="text-center">Kategorileri görüntüleyebilir, yeni kategori ekleyebilir veya mevcut kategorileri güncelleyip silebilirsiniz.</p>
+
+<div class="text-center mb-4">
+    <a asp-action="AddCategory" class="btn btn-gradient">Yeni Kategori Ekle</a>
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Kategori ID</th>
+            <th scope="col">Kategori Adı</th>
+            <th scope="col">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.CategoryID</td>
+                <td>@category.CategoryName</td>
+                <td>
+                    <a asp-action="UpdateCategory" asp-route-id="@category.CategoryID" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Güncelle
+                    </a>
+                    <form asp-action="DeleteCategory" asp-route-id="@category.CategoryID" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Sil
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .text-center {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.2rem;
+        color: #2c3e50;
+        text-align: center;
+        margin: 20px 0;
+        line-height: 1.5;
+    }
+
+    h1 {
+        background-color: yellow;
+        color: black !important;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+
+        h1:hover {
+            background-color: #f39c12;
+            color: #fff;
+        }
+
+    .btn-gradient {
+        background-color: seagreen;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    table {
+        width: 100%;
+        margin-top: 30px;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: #1abc9c;
+        color: black;
+        font-weight: bold;
+        padding: 15px 20px;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        border-radius: 5px 5px 0 0;
+        transition: background-color 0.3s ease;
+    }
+
+        th:hover {
+            background-color: #16a085;
+        }
+
+    td {
+        background-color: #ecf0f1;
+        padding: 15px;
+        font-size: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        color: #2c3e50;
+        transition: background-color 0.3s ease;
+    }
+
+        td:hover {
+            background-color: #dfe6e9;
+        }
+
+    tr:hover {
+        background-color: #f7f7f7;
+    }
+
+    .btn-sm {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+        font-weight: normal;
+    }
+
+    .fas {
+        margin-right: 5px;
+    }
+
+    form button[type="submit"]:hover {
+        background-color: #c0392b;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+</style>

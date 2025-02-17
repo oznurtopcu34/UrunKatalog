@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Üye Paneli";
+}
+
+<div class="container mt-5">
+    <h2 class="panel-welcome-title">
+        <i class="fa fa-user" aria-hidden="true"></i> Üye Paneline Hoş Geldiniz!
+    </h2>
+    <p class="text-center text-muted">
+        Buradan siparişlerinizi görüntüleyebilir, sepetinize ulaşabilir ve iade taleplerinizi yönetebilirsiniz.
+    </p>
+
+    <div class="d-flex flex-column align-items-center gap-3 mt-4">
+        <a asp-area="UserPanel" asp-controller="Panel" asp-action="MyOrders" class="btn btn-primary btn-lg shadow w-50">Siparişlerim</a>
+        <a asp-area="" asp-controller="Home" asp-action="ViewCart" class="btn btn-secondary btn-lg shadow w-50">Sepetim</a>
+        <a asp-area="UserPanel" asp-controller="FAQ" asp-action="Index" class="btn btn-success btn-lg shadow w-50">Sıkça Sorulan Soruları Görüntüle</a>
+        <a asp-area="UserPanel" asp-controller="Complaint" asp-action="Index" class="btn btn-danger btn-lg shadow w-50">Şikayet Görüntüle</a>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #e0f6fa;
+    }
+
+    /* Üye Paneli Başlığı */
+    .panel-welcome-title {
+        display: flex;
+        align-items: center;
+        background-color: #ffcc00;
+        color: black !important;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
+        transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s;
+    }
+
+        .panel-welcome-title i {
+            margin-right: 10px; /* Simge ile yazı arasındaki mesafe */
+            font-size: 24px; /* Simgenin boyutu */
+        }
+
+        /* Hover Efekti */
+        .panel-welcome-title:hover {
+            background-color: #007bff;
+            color: white !important;
+            transform: scale(1.05);
+        }
+
+    /* Açıklama Metni */
+    .text-center.text-muted {
+        color: #6c757d;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.5;
+        background: linear-gradient(90deg, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px 20px;
+        border-radius: 10px;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .text-center.text-muted:hover {
+            transform: translateY(-3px);
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    /* Butonlar */
+    .btn-lg {
+        padding: 15px 25px;
+        font-size: 18px;
+        transition: transform 0.2s, box-shadow 0.3s, border 0.3s;
+        border-radius: 8px;
+        border: 2px solid transparent;
+    }
+
+        .btn-lg:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #007bff;
+        }
+
+    .gap-3 {
+        gap: 15px;
+    }
+</style>
+
+<!-- Font Awesome Kütüphanesi -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">

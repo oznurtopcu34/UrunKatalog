@@ -1,0 +1,198 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.Complaint_DTO>
+
+@{
+    ViewData["Title"] = "Şikayetlerim";
+}
+
+<div class="container">
+    <h2 class="admin-title">📢 Şikayetlerim</h2>
+
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Konu</th>
+                    <th>Açıklama</th>
+                    <th>Cevap</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var complaint in Model)
+                {
+                    <tr>
+                        <td>@complaint.Subject</td>
+                        <td>@complaint.Description</td>
+                        <td>@(string.IsNullOrEmpty(complaint.Response) ? "Henüz yanıtlanmadı" : complaint.Response)</td>
+                        <td>
+                            <form method="post" action="/UserPanel/Complaint/DeleteComplaint">
+                                <input type="hidden" name="complaintId" value="@complaint.ComplaintID" />
+                                <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="add-complaint-container">
+        <h3 class="mt-4"> 📢YENİ ŞİKAYET EKLE📢</h3>
+        <form method="post" action="/UserPanel/Complaint/AddComplaint">
+            <div class="form-group">
+                <label for="subject">Konu:</label>
+                <input type="text" class="form-control" id="subject" name="Subject" required placeholder="Şikayetinizin konusu..." />
+            </div>
+            <div class="form-group">
+                <label for="description">Açıklama:</label>
+                <textarea class="form-control" id="description" name="Description" required placeholder="Şikayetinizi buraya yazın..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-gradient mt-2">Gönder</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Silme işlemi için alert
+    document.querySelectorAll('form[action="/UserPanel/Complaint/DeleteComplaint"]').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            if (!confirm('Şikayetini silmek istediğinizden emin misiniz?')) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #f4f9fd;
+    }
+
+    .admin-title {
+        background-color: #ffeb3b;
+        color: #333;
+        padding: 20px 30px;
+        border-radius: 30px;
+        border: 3px solid #333;
+        text-align: center;
+        font-weight: bold;
+        font-size: 32px;
+        margin: 40px auto;
+        width: fit-content;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    .table {
+        margin-top: 20px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    }
+
+        .table thead {
+            background-color: #ffeb3b;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f8fd;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+    .add-complaint-container {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+        .add-complaint-container h3 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .add-complaint-container h3::after {
+                content: "";
+                position: absolute;
+                width: 80px;
+                height: 3px;
+                background-color: #ffeb3b;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+    .form-group label {
+        font-size: 18px;
+        color: #555;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: block;
+        text-align: left;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        font-style: italic;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #ffeb3b;
+            box-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
+        }
+
+    .btn-gradient {
+        background: linear-gradient(45deg, black, #fad0c4);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+        color: white;
+        padding: 8px 16px;
+        font-weight: bold;
+        border-radius: 30px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            border-color: #c0392b;
+        }
+
+</style>

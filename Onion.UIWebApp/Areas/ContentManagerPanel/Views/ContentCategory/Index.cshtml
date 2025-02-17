@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.ContentCategory_DTO>
+
+@{
+    ViewData["Title"] = "Kategori Listesi";
+}
+
+<!-- Font Awesome Kütüphanesi -->
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<h1 class="admin-title">
+    <i class="fas fa-list"></i> Kategori Listesi
+</h1>
+
+<p class="intro-text">Kategorileri görüntüleyebilir, yeni kategori ekleyebilir veya mevcut kategorileri güncelleyip silebilirsiniz.</p>
+
+<div class="centered-btn-container">
+    <a asp-action="AddCategory" class="btn btn-gradient mb-3">Yeni Kategori Ekle</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Kategori ID</th>
+            <th>Kategori Adı</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td>@category.ContentCategoryID</td>
+                <td>@category.ContentCategoryName</td>
+                <td>
+                    <a asp-action="UpdateCategory" asp-route-id="@category.ContentCategoryID" class="btn btn-warning">Güncelle</a>
+                    <form asp-action="DeleteCategory" asp-route-id="@category.ContentCategoryID" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1.admin-title {
+        background-color: yellow;
+        color: black;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin: 20px auto;
+        width: fit-content;
+    }
+
+    .admin-title i {
+        margin-right: 10px;
+        color: #f39c12;
+        font-size: 1.5rem;
+        vertical-align: middle;
+    }
+
+    .intro-text {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        line-height: 1.5;
+        text-transform: capitalize;
+    }
+
+    .centered-btn-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .btn-gradient {
+        background-color: seagreen;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-warning {
+        background-color: #f39c12;
+        color: white;
+        font-weight: bold;
+        border-radius: 30px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-warning:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        font-weight: bold;
+        border-radius: 30px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-danger:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    table {
+        width: 100%;
+        margin-top: 30px;
+        border-collapse: collapse;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        transition: background-color 0.3s ease;
+    }
+
+    th {
+        background-color: #f1f1f1;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: #eaf6fd;
+    }
+
+    .table-striped tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-striped td:hover {
+        background-color: #f2f2f2;
+    }
+</style>

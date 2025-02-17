@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "İçerik Yönetici Paneli";
+}
+
+<div class="container mt-5">
+    <h1 class="admin-title">📌 İçerik Yönetici Paneli</h1>
+    <p class="text-center text-muted">
+        İçerik yönetici paneline hoş geldiniz! Aşağıdaki bağlantıları kullanarak içerik yönetimi işlemlerine erişebilirsiniz.
+    </p>
+    <div class="d-flex flex-column align-items-center gap-3 mt-4">
+        <a asp-area="ContentManagerPanel" asp-controller="Product" asp-action="Index" class="btn btn-gradient purple">Ürünleri Görüntüle</a>
+        <a asp-area="ContentManagerPanel" asp-controller="Profile" asp-action="Index" class="btn btn-gradient green">Profili Görüntüle</a>
+        <a asp-area="ContentManagerPanel" asp-controller="ContentCategory" asp-action="Index" class="btn btn-gradient yellow">Kategorileri Görüntüle</a>
+        <a asp-area="ContentManagerPanel" asp-controller="News" asp-action="Index" class="btn btn-gradient blue">Haberleri Görüntüle</a>
+        <a asp-area="ContentManagerPanel" asp-controller="BlogPost" asp-action="Index" class="btn btn-gradient black">Blog Yazılarını Görüntüle</a>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #eaf6fd;
+    }
+
+    .admin-title {
+        color: black;
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        letter-spacing: 1.5px;
+        padding-bottom: 10px;
+        border-bottom: 3px solid #000;
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .admin-title:hover {
+            color: #007bff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+        }
+
+    .text-center.text-muted {
+        font-size: 18px;
+        text-align: center;
+        background: linear-gradient(90deg, #9b59b6, #8e44ad);
+        -webkit-background-clip: text;
+        color: transparent;
+        padding: 10px 20px;
+        border-radius: 10px;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .text-center.text-muted:hover {
+            transform: translateY(-3px);
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    .d-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-gradient {
+        padding: 15px 25px;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 8px;
+        text-align: center;
+        text-decoration: none;
+        width: 50%;
+        transition: transform 0.2s, box-shadow 0.3s;
+        color: white;
+    }
+
+    .purple {
+        background: linear-gradient(45deg, #9b59b6, #e056fd);
+    }
+
+    .blue {
+        background: linear-gradient(45deg, #3498db, #2980b9);
+    }
+
+    .green {
+        background: linear-gradient(45deg, #2ecc71, #27ae60);
+    }
+
+    .black {
+        background: linear-gradient(45deg, #2c3e50, #34495e);
+    }
+
+    .yellow {
+        background: linear-gradient(45deg, #f1c40f, #f39c12);
+        color: black;
+    }
+
+    .btn-gradient:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .gap-3 {
+        gap: 15px;
+    }
+</style>

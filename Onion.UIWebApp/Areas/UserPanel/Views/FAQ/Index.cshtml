@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.FAQ_DTO>
+
+@{
+    ViewData["Title"] = "Sıkça Sorulan Sorular";
+}
+
+<div class="container">
+    <h2 class="admin-title">❓ Sıkça Sorulan Sorular</h2>
+
+    <div class="card">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Soru</th>
+                    <th>Cevap</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var faq in Model)
+                {
+                    <tr>
+                        <td>@faq.Question</td>
+                        <td>@(string.IsNullOrEmpty(faq.Answer) ? "Henüz cevaplanmadı" : faq.Answer)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="question-container">
+        <h3 class="question-header">❓ Soru Sor ❓</h3>
+        <form id="faqForm">
+            <div class="form-group">
+                <label for="question" class="question-label">Sorunuzu bizimle paylaşın:</label>
+                <textarea class="form-control" id="question" name="question" placeholder="Sorunuzu buraya yazın..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-gradient mt-2">Gönder</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById("faqForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let question = document.getElementById("question").value;
+
+        fetch("/UserPanel/FAQ/AddFAQ", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ UserID: 1, Question: question }) // Kullanıcı kimliği dinamik hale getirilmeli
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                location.reload();
+            })
+            .catch(error => console.error("Hata:", error));
+    });
+</script>
+
+<style>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #f4f9fd;
+    }
+
+    .admin-title {
+        background-color: #ffeb3b;
+        color: #333;
+        padding: 20px 30px;
+        border-radius: 30px;
+        border: 3px solid #333;
+        text-align: center;
+        font-weight: bold;
+        font-size: 32px;
+        margin: 40px auto;
+        width: fit-content;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .card {
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    .table {
+        margin-top: 20px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    }
+
+        .table thead {
+            background-color: #ffeb3b;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f8fd;
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+    .question-container {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .question-header {
+        font-size: 32px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-top: 30px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .question-header::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: #ffeb3b;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+    .question-label {
+        font-size: 18px;
+        color: #555;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: block;
+        text-align: left;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        font-style: italic;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #ffeb3b;
+            box-shadow: 0 0 8px rgba(255, 235, 59, 0.6);
+        }
+
+    .btn-gradient {
+        background: linear-gradient(45deg, black, #fad0c4);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+</style>

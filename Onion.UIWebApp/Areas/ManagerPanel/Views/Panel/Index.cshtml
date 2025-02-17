@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Yönetici Paneli";
+}
+<div class="container mt-5">
+    <h1 class="admin-title">Yönetici Paneli</h1>
+    <p class="text-center text-muted">
+        Yönetici paneline hoş geldiniz! Aşağıdaki bağlantıları kullanarak ürün ve kategori işlemlerine erişebilirsiniz.
+    </p>
+    <div class="d-flex flex-column align-items-center gap-3 mt-4">
+        <a asp-area="ManagerPanel" asp-controller="Product" asp-action="Index" class="btn btn-primary btn-lg shadow w-50">Ürünleri Görüntüle</a>
+        <a asp-area="ManagerPanel" asp-controller="Category" asp-action="Index" class="btn btn-info btn-lg shadow w-50">Kategorileri Görüntüle</a>
+        <a asp-area="ManagerPanel" asp-controller="Profile" asp-action="Index" class="btn btn-success btn-lg shadow w-50">Profili Görüntüle</a>
+        <a asp-area="ManagerPanel" asp-controller="ReturnRequests" asp-action="Index" class="btn btn-dark btn-lg shadow w-50">İade Görüntüle</a>
+        <a asp-area="ManagerPanel" asp-controller="WeeklyOrders" asp-action="WeeklyOrders" class="btn btn-warning btn-lg shadow w-50">Haftalık Sipariş</a>
+        <a asp-area="ManagerPanel" asp-controller="Bid" asp-action="Index" class="btn btn-danger btn-lg shadow w-50">Teklifler</a>
+    </div>
+</div>
+
+<style>
+
+
+    .text-center.text-muted {
+        color: #6c757d;
+        font-size: 18px;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.5;
+        background: linear-gradient(90deg, #6a11cb, #2575fc);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px 20px;
+        border-radius: 10px;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .text-center.text-muted:hover {
+            transform: translateY(-3px);
+            text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2);
+        }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #e0f7fa;
+    }
+
+    .admin-title {
+        color: black;
+        font-size: 32px;
+        font-weight: bold;
+        letter-spacing: 1.5px;
+        border-bottom: 3px solid #000;
+        padding-bottom: 10px;
+        display: block;
+        text-align: center;
+        width: fit-content;
+        margin: 0 auto;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2), -1px -1px 2px rgba(255, 255, 255, 0.3);
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .admin-title:hover {
+            color: #007bff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3), -1px -1px 4px rgba(255, 255, 255, 0.4);
+        }
+
+    .btn-lg {
+        padding: 15px 25px;
+        font-size: 18px;
+        transition: transform 0.2s, box-shadow 0.3s, border 0.3s;
+        border-radius: 8px;
+        border: 2px solid transparent;
+    }
+
+        .btn-lg:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            border: 2px solid #007bff;
+        }
+
+    .gap-3 {
+        gap: 15px;
+    }
+</style>

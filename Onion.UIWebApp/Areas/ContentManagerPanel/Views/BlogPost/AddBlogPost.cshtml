@@ -1,0 +1,136 @@
+﻿@model Onion.UIWebApp.Models.BlogPost_VM
+@{
+    ViewData["Title"] = "AddBlogPost";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <form asp-action="AddBlogPost" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label fancy-label">Başlık</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Content" class="control-label fancy-label">İçerik</label>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ContentCategoryID" class="control-label fancy-label">Kategori</label>
+                <select asp-for="ContentCategoryID" class="form-control" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="ContentCategoryID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Image" class="control-label fancy-label">Ürün Resmi</label>
+                <input asp-for="Image" type="file" class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Oluştur" class="btn btn-gradient" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-4">
+    <a asp-action="Index" class="btn btn-link fancy-btn-link">Listeye Dön</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .control-label.fancy-label {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 12px;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        width: 100%;
+        margin-top: 5px;
+        transition: border-color 0.3s ease-in-out;
+        background-color: #f8f8f8;
+    }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+            background-color: #fff;
+        }
+
+    .btn-gradient {
+        background-color: #2ecc71;
+        color: white;
+        padding: 14px 22px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        width: 100%;
+        transition: all 0.3s ease;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    .fancy-btn-link {
+        color: black;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background-color: yellow;
+        display: inline-block;
+    }
+
+        .fancy-btn-link:hover {
+            background-color: blue;
+            color: black;
+            transform: scale(1.05);
+        }
+
+    .row {
+        margin-top: 50px;
+    }
+
+    .col-md-6 {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+</style>

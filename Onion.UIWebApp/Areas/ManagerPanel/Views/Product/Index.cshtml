@@ -1,0 +1,170 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e0f7fa; /* Açık gri tonunda arka plan */
+        color: #333;
+    }
+
+    h1 {
+        text-align: center;
+        color: #343a40;
+        margin-bottom: 30px;
+        font-size: 36px;
+        font-weight: 600;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+        .table th, .table td {
+            padding: 12px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: yellow;
+            color: black;
+            font-size: 18px;
+        }
+
+            .table th:hover {
+                background-color: blue; /* Hover durumunda biraz daha koyu sarı */
+                transition: background-color 0.3s ease; /* Geçiş efekti */
+            }
+
+        .table td {
+            font-size: 16px;
+        }
+
+            .table td img {
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease; /* Resmin büyümesini animasyonlu hale getir */
+            }
+
+                /* Resim üzerine gelindiğinde büyüme efekti */
+                .table td img:hover {
+                    transform: scale(1.5); /* Resmi %10 büyüt */
+                }
+
+        /* Satır hover efekti */
+        .table tr:hover {
+            background-color: #f1f8ff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+    .btn {
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-size: 14px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
+    }
+
+        /* Buton hover animasyonları */
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+    .btn-primary {
+        background-color: yellow;
+        color: black !important;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        display: inline-block;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+        .btn-primary:hover {
+            background-color: blue;
+        }
+
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+
+
+
+    .form-inline {
+        display: inline-block;
+    }
+
+
+
+    .page-header {
+        font-size: 24px;
+        font-weight: 600;
+        color: #343a40;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+</style>
+
+<div class="container mt-5">
+
+
+    <p class="text-center">
+        <a asp-action="AddProduct" class="btn btn-primary">Yeni Ürün Ekle</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Resim</th>
+                <th>Ürün </th>
+                <th>Açıklama</th>
+                <th>Fiyat</th>
+                <th>Stok</th>
+                <th>Kategori</th>
+                <th>Aksiyonlar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="~/Images/@item.Image" width="100" height="150" alt="Kapak Resmi" class="img-thumbnail" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Stock)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CategoryName)</td>
+                    <td>
+                        <a asp-action="UpdateProduct" asp-route-id="@item.ProductID" class="btn btn-warning btn-sm">Güncelle</a>
+                        <form asp-action="DeleteProduct" asp-route-id="@item.ProductID" method="post" class="form-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm confirm-btn" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?');">Sil</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

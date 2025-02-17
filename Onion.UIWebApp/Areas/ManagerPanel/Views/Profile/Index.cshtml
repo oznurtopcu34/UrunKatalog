@@ -1,0 +1,137 @@
+﻿@model Onion.Application.Model.DTO_s.ProfileUpdate_DTO
+
+<div class="container my-5">
+    <h2 class="custom-title">Profil Bilgileri</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form asp-action="Update" method="post" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="FirstName" class="control-label fancy-label">Ad</label>
+            <input asp-for="FirstName" class="form-control custom-input" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="control-label fancy-label">Soyad</label>
+            <input asp-for="LastName" class="form-control custom-input" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label fancy-label">E-posta</label>
+            <input asp-for="Email" class="form-control custom-input" type="email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserName" class="control-label fancy-label">Kullanıcı Adı</label>
+            <input asp-for="UserName" class="form-control custom-input" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-gradient">Güncelle</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background-color: #e3f2fd; /* Açık mavi tonu */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Başlık için stil */
+    .custom-title {
+        background-color: yellow;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-weight: bold;
+        border: 2px solid black;
+        text-align: center;
+        font-size: 22px;
+        width: fit-content;
+        margin: 20px auto;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Havalı Etiketler */
+    label.control-label.fancy-label {
+        font-size: 1.2rem;
+        color: #2c3e50;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        label.control-label.fancy-label::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: seagreen;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        label.control-label.fancy-label:hover::before {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+    /* Input Alanı */
+    .form-control.custom-input {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+        width: 100%;
+        margin-top: 5px;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control.custom-input:focus {
+            border-color: seagreen;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.8);
+        }
+
+    /* Buton Tasarımı */
+    .btn-gradient {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+    /* Hata Mesajları */
+    .text-danger {
+        font-size: 0.9rem;
+        color: #e74c3c;
+    }
+</style>

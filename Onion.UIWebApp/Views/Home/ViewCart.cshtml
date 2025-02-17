@@ -1,0 +1,156 @@
+﻿@model Onion.UIWebApp.Models.Cart_VM
+
+<div class="container">
+    <h2 class="admin-title">Sepetiniz</h2>
+
+    @if (!Model.CartItems.Any())
+    {
+        <p class="empty-cart">Sepetiniz boş.</p>
+    }
+    else
+    {
+        <div class="cart-card">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th>Ürün Adı</th>
+                        <th>Miktar</th>
+                        <th>Birim Fiyat</th>
+                        <th>Toplam Fiyat</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@(item.Price / item.Quantity) ₺</td>
+                            <td class="price">@item.Price ₺</td>
+                            <td>
+                                <form asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="cartItemId" value="@item.CartItemID" />
+                                    <button type="submit" class="btn btn-danger btn-remove"><i class="fas fa-trash-alt"></i> Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h3 class="total-price">Toplam Fiyat: <span>@Model.TotalPrice ₺</span></h3>
+            <form asp-action="PurchaseCart" method="post" class="purchase-form">
+                <button type="submit" class="btn btn-gradient"><i class="fas fa-shopping-cart"></i> Satın Al</button>
+            </form>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        background-color: #eaf6fd; /* Soft pastel mavi tonu */
+        color: #333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .admin-title {
+        background-color: yellow;
+        color: black;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin: 20px auto;
+        display: block;
+        width: fit-content;
+    }
+
+    .cart-card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 1.1rem;
+    }
+
+        .custom-table th, .custom-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .custom-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        .custom-table td {
+            background-color: #ffffff;
+        }
+
+    .price {
+        font-weight: bold;
+        color: #e74c3c;
+    }
+
+    .total-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #2c3e50;
+    }
+
+        .total-price span {
+            color: #16a085;
+        }
+
+    .btn-remove {
+        padding: 8px 12px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .btn-gradient {
+        background: linear-gradient(45deg, #6a11cb, #2575fc);
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+    .empty-cart {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #e74c3c;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .purchase-form {
+        margin-top: 20px;
+    }
+</style>

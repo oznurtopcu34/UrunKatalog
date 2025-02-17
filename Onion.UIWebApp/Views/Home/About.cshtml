@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<style>
+    body {
+        font-family: 'Helvetica Neue', sans-serif;
+        margin: 0;
+        color: #333;
+        background-color: #E3F2FD; /* Açık mavi arka plan */
+    }
+
+    .hakkinda-container {
+        min-height: 100vh; /* Sayfanın tamamını kaplasın */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 20px;
+    }
+
+    .hakkinda-card {
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        text-align: center;
+    }
+
+        .hakkinda-card h2 {
+            color: #0277BD; /* Koyu mavi başlık */
+            font-weight: bold;
+        }
+
+        .hakkinda-card p {
+            color: #333;
+            font-size: 18px;
+        }
+
+    .motto {
+        font-style: italic;
+        font-size: 20px;
+        color: #01579B;
+        margin-top: 15px;
+    }
+
+
+    .hakkinda-card h3 {
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+        display: inline-block;
+        margin-top: 20px;
+    }
+
+    h3:nth-of-type(1) {
+        background-color: #0288D1;
+    }
+
+    h3:nth-of-type(2) {
+        background-color: #00796B;
+    }
+
+    h3:nth-of-type(3) {
+        background-color: #FF6F00;
+        .list-group
+
+    {
+        padding: 0;
+    }
+
+    .list-group-item {
+        background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+        color: #01579B;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 12px;
+        margin: 8px 0;
+        transition: all 0.3s ease-in-out;
+        list-style: none;
+    }
+
+        .list-group-item:hover {
+            background: linear-gradient(135deg, #BBDEFB, #90CAF9);
+            transform: scale(1.05);
+        }
+</style>
+
+<div class="hakkinda-container">
+    <div class="hakkinda-card">
+        <h2>🚀 Ö.N.E Teknoloji: Geleceği Birlikte Şekillendiriyoruz</h2>
+
+        <p>
+            Ö.N.E Teknoloji, yenilikçi çözümler sunarak teknoloji dünyasında fark yaratmak amacıyla kurulmuştur.
+            Kurucularımız Nevzat Kara, Öznur Topçu ve Ercan Çimen, BilgeAdam Akademi’de tanışarak ortak projelerde büyük başarılara imza attılar.
+            Bu iş birliği ve elde ettikleri başarılar, onların teknoloji alanında daha büyük bir vizyonla ilerlemeleri için ilham kaynağı oldu.
+            Böylece, güçlü bir ekip ruhuyla Ö.N.E Teknoloji’yi hayata geçirme kararı aldılar.
+        </p>
+
+        <p class="motto">"Teknolojiye yön ver, geleceği inşa et!"</p>
+
+        <h3>🎯 Misyonumuz</h3>
+        <p>
+            Müşterilerimize en yeni ve güvenilir teknolojik ürünleri sunmak, sektördeki gelişmeleri yakından takip ederek
+            bilgi paylaşımını artırmak ve teknoloji dünyasında yenilikçi çözümler geliştirmek.
+        </p>
+
+        <h3>🌍 Vizyonumuz</h3>
+        <p>
+            Teknolojiye yön veren bir marka olarak, sektörde öncü olmayı hedefliyoruz.
+            Hem bireysel kullanıcılar hem de kurumsal müşteriler için en iyi ürünleri, bilgileri ve çözümleri sunan güvenilir bir platform olmayı amaçlıyoruz.
+        </p>
+
+
+        <h3>📰 Neler Sunuyoruz?</h3>
+        <ul class="list-group">
+            <li class="list-group-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">✅ Teknolojik Ürün Satışları</a></li>
+            <li class="list-group-item">  <a class="nav-link text-dark" asp-area="" asp-controller="BlogPost" asp-action="Index">📖 Blog Yazıları</a></li>
+            <li class="list-group-item"> <a class="nav-link text-dark" asp-area="" asp-controller="News" asp-action="Index">📰 Güncel Teknoloji Haberleri </a></li>
+        </ul>
+
+        <p class="mt-3">
+            Ö.N.E Teknoloji olarak, teknolojiye tutkulu herkes için <strong>en iyi alışveriş, bilgi ve içerik deneyimini</strong> sunmaya devam edeceğiz.
+            <br><br>
+            <strong>Bizi takip edin ve geleceğe birlikte adım atalım! 🚀</strong>
+        </p>
+    </div>
+</div>

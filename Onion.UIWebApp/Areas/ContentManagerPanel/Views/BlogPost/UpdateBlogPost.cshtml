@@ -1,0 +1,157 @@
+﻿@model Onion.UIWebApp.Models.BlogPostUpdate
+
+@{
+    ViewData["Title"] = "Blog Yazısı Güncelle";
+}
+
+<div class="update-container">
+    <h2 class="page-title">
+        <i class="fas fa-edit"></i> Blog Yazısı Güncelle
+    </h2>
+
+    <form asp-action="UpdateBlogPost" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <label asp-for="BlogPostID" class="control-label fancy-label">Yazı ID</label>
+            <input asp-for="BlogPostID" class="form-control" readonly />
+            <span asp-validation-for="BlogPostID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Title" class="control-label fancy-label">Başlık</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="control-label fancy-label">İçerik</label>
+            <textarea asp-for="Content" class="form-control" rows="6"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ContentCategoryID" class="control-label fancy-label">Kategori</label>
+            <select asp-for="ContentCategoryID" class="form-control" asp-items="ViewBag.Categories"></select>
+            <span asp-validation-for="ContentCategoryID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Image" class="control-label fancy-label">Blog Resmi</label>
+            <input asp-for="Image" type="file" class="form-control" />
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-gradient">Güncelle</button>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        color: #333;
+    }
+
+
+    .update-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 40px;
+        margin-top: 40px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .page-title {
+        font-size: 28px;
+        background-color: yellow;
+        color: #333;
+        padding: 15px 25px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 15px;
+        display: block;
+        width: fit-content;
+        margin: 20px auto;
+        position: relative;
+    }
+
+        .page-title i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    label.control-label.fancy-label {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px solid #ddd;
+        width: 100%;
+        margin-top: 5px;
+        transition: all 0.3s ease-in-out;
+        background-color: #f8f8f8;
+    }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+            background-color: #fff;
+        }
+
+    .btn-gradient {
+        background-color: #2ecc71;
+        color: white;
+        padding: 15px 25px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        width: 100%;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        border: none;
+    }
+
+        .btn-gradient:hover {
+            background-color: #27ae60;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    .text-danger {
+        font-size: 0.9rem;
+        color: #e74c3c;
+    }
+
+    /* Hover Effects */
+    .form-control:hover {
+        border-color: #2980b9;
+    }
+
+    .btn-gradient:focus {
+        outline: none;
+        box-shadow: 0 0 10px rgba(46, 204, 113, 0.6);
+    }
+</style>

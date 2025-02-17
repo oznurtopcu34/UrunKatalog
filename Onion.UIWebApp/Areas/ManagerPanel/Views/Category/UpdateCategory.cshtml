@@ -1,0 +1,125 @@
+﻿@model Onion.Application.Model.DTO_s.Category_DTO
+
+@{
+    ViewData["Title"] = "Kategori Güncelle";
+}
+
+<h1 class="admin-title">Kategori Güncelle</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="UpdateCategory" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CategoryName" class="control-label fancy-label">Kategori Adı</label>
+                <input asp-for="CategoryName" class="form-control" />
+                <span asp-validation-for="CategoryName" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="CategoryID" />
+            <button type="submit" class="btn btn-gradient">Güncelle</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<style>
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #eaf6fd;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    h1.admin-title {
+        background-color: yellow;
+        color: black;
+        padding: 15px 25px;
+        border-radius: 10px;
+        border: 2px solid black;
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin: 20px auto;
+        display: block;
+        width: fit-content;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Yeni Stil: Kategori Adı Etiketinin Havalı Tasarımı */
+    label.control-label.fancy-label {
+        font-size: 1.3rem;
+        color: #2c3e50;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        display: inline-block;
+        margin-bottom: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        label.control-label.fancy-label::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: seagreen;
+            bottom: 0;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        label.control-label.fancy-label:hover::before {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+    .form-control {
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        border: 2px solid #ccc;
+        width: 100%;
+        margin-top: 5px;
+        transition: border-color 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: seagreen;
+            box-shadow: 0 0 5px rgba(46, 204, 113, 0.8);
+        }
+
+    .btn-gradient {
+        background-color: seagreen;
+        color: white;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        transition: all 0.3s ease-in-out;
+        font-weight: bold;
+    }
+
+        .btn-gradient:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    .text-danger {
+        font-size: 0.9rem;
+        color: #e74c3c;
+    }
+
+</style>

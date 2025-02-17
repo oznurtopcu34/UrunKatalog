@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim Sayfası</title>
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome (ikonlar için) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            margin: 0;
+            color: #333;
+            background-color: #E3F2FD; /* Açık mavi arka plan */
+        }
+
+        .iletisim-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+
+        .iletisim-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            text-align: center;
+        }
+
+            .iletisim-card h2 {
+                color: #0277BD;
+                font-weight: bold;
+            }
+
+        .iletisim-info {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+            .iletisim-info p {
+                font-weight: bold;
+                font-size: 20px;
+                margin: 15px 0;
+                color: #0277BD;
+            }
+
+
+        .instagram {
+            background-color: #00796B;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .linkedin {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .email {
+            background-color: #FF6F00;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+
+        .iletisim-info .instagram,
+        .iletisim-info .linkedin,
+        .iletisim-info .email,
+        .iletisim-info .phone {
+            color: black;
+        }
+
+
+        .iletisim-info a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
+            .iletisim-info a:hover {
+                color: #01579B;
+            }
+
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: white;
+        }
+
+        .map-container {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="iletisim-container">
+        <div class="iletisim-card">
+            <h2>📞 İletişim</h2>
+            <p>Bizimle iletişime geçmek için aşağıdaki bilgileri kullanabilirsiniz.</p>
+
+            <div class="iletisim-info">
+                <p class="instagram">İnstagram Hesabımız</p>
+                <p><i class="icon fab fa-instagram"></i> <a href="https://www.instagram.com/oneteknoloji" target="_blank">oneteknoloji</a></p>
+
+                <p class="linkedin">LinkedIn Hesabımız</p>
+                <p><i class="icon fab fa-linkedin"></i> <a href="https://www.linkedin.com/company/oneteknoloji" target="_blank">oneteknoloji</a></p>
+
+                <p class="email">Mailimiz</p>
+                <p><i class="icon fas fa-envelope"></i> <a href="mailto:info@oneteknoloji.com">info@oneteknoloji.com</a></p>
+
+                <p class="phone">
+                    <i class="icon fas fa-phone"></i> <a href="tel:+902163472121">(0216) 347 21 21</a>
+                </p>
+            </div>
+
+            <h3>📍 Konumumuz</h3>
+            <p>Caferağa, Mühürdar Cd. No:76, 34710 Kadıköy/İstanbul</p>
+
+            <div class="map-container">
+                <iframe width="100%"
+                        height="300"
+                        frameborder="0"
+                        style="border:0; border-radius:10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3125.3797993209365!2d29.02574377643756!3d40.98785327139157!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac78c9ebf1c69%3A0xc61e3652aa1e491d!2sM%C3%BCh%C3%BCrdar%20Cd.%20No%3A76%2C%2034710%20Kadık%C3%B6y%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1700000000000"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

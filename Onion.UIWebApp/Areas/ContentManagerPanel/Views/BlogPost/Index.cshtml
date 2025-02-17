@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Onion.Application.Model.DTO_s.BlogPost_DTO>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<p>
+    <a asp-action="AddBlogPost" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Blog Yazısı Ekle
+    </a>
+</p>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Kapak Resmi</th>
+            <th>Başlık</th>
+            <th>İçerik</th>
+            <th>Kategori Adı</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="image-cell">
+                    <div class="image-wrapper">
+                        <img src="~/Images/@item.Image" alt="Kapak Resmi" class="img-thumbnail blog-image" />
+                    </div>
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Content)</td>
+                <td>@Html.DisplayFor(modelItem => item.ContentCategoryName)</td>
+                <td>
+                    <a asp-action="UpdateBlogPost" asp-route-id="@item.BlogPostID" class="btn btn-warning btn-sm">Güncelle</a>
+                    <form asp-action="DeleteBlogPost" asp-route-id="@item.BlogPostID" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bu ürünü silmek istediğinizden emin misiniz?');">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f6ff;
+        color: #333;
+    }
+
+    table.table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+
+        table.table th, table.table td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        table.table th {
+            background-color: yellow;
+            color: black;
+            font-size: 1.1rem;
+        }
+
+        table.table td {
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+
+    /* 📌 Resim ve kapsayıcı ayarları */
+    .image-wrapper {
+        width: 350px; /* Resmin genişliği */
+        height: 350px; /* Resmin yüksekliği */
+        overflow: hidden; /* Taşmalarını engelle */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease; /* Hover için animasyon */
+            object-fit: cover; /* Resmin oranını bozmadan düzgün oturmasını sağlar */
+        }
+
+            .image-wrapper img:hover {
+                transform: scale(1.2); /* Resmi büyütme efekti */
+            }
+
+    .btn-success {
+        background-color: #27ae60;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-success:hover {
+            background-color: #2ecc71;
+            transform: scale(1.05);
+        }
+
+    .btn-warning {
+        background-color: #f39c12;
+        color: white;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+            transform: scale(1.05);
+        }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        color: white;
+        border-radius: 30px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            transform: scale(1.05);
+        }
+
+    form {
+        display: inline-block;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #ecf0f1;
+    }
+
+    .table-bordered {
+        border: 1px solid #ccc;
+    }
+</style>

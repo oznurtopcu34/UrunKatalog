@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+    <PackageReference Include="Sentry.AspNetCore" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\ContentManagerPanel\Data\" />
+    <Folder Include="Areas\ContentManagerPanel\Models\" />
+    <Folder Include="Areas\CustomerServicePanel\Data\" />
+    <Folder Include="Areas\CustomerServicePanel\Models\" />
+    <Folder Include="Areas\ManagerPanel\Data\" />
+    <Folder Include="Areas\ManagerPanel\Models\" />
+    <Folder Include="Areas\UserPanel\Data\" />
+    <Folder Include="Areas\UserPanel\Models\" />
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Onion.Application\Onion.Application.csproj" />
+  </ItemGroup>
+
+</Project>

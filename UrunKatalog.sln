@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Onion.Application", "Onion.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onion.UIWebApp", "Onion.UIWebApp\Onion.UIWebApp.csproj", "{FA0C564D-DE97-4A34-A93C-5703DD3735E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Onion.Api", "Onion.Api\Onion.Api.csproj", "{6EDC2CBA-BB75-4E5A-AA26-2CC0A567D649}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{FA0C564D-DE97-4A34-A93C-5703DD3735E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA0C564D-DE97-4A34-A93C-5703DD3735E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA0C564D-DE97-4A34-A93C-5703DD3735E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EDC2CBA-BB75-4E5A-AA26-2CC0A567D649}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EDC2CBA-BB75-4E5A-AA26-2CC0A567D649}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EDC2CBA-BB75-4E5A-AA26-2CC0A567D649}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EDC2CBA-BB75-4E5A-AA26-2CC0A567D649}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

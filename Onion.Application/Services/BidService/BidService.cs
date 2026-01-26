@@ -3,13 +3,6 @@ using Onion.Application.Model.DTO_s;
 using Onion.Domain.Enums;
 using Onion.Domain.Models;
 using Onion.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Onion.Application.Services.BidService
 {

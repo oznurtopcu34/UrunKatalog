@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Onion.Application.Services.ReturnItemService
+﻿namespace Onion.Application.Services.ReturnItemService
 {
     public interface IReturnItemService
     {

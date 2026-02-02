@@ -55,4 +55,17 @@ public class AuthController : ControllerBase
             ExpiresAt = expiresAt
         });
     }
+
+    /// <summary>
+    /// Çıkış yapar. İstemci tarafında token'ı (localStorage, cookie vb.) silmeniz gerekir.
+    /// </summary>
+    [HttpPost("logout")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public IActionResult Logout()
+    {
+        // JWT stateless olduğu için sunucuda token iptal edilmez; istemci token'ı silmeli.
+        return Ok(new { message = "Çıkış yapıldı. Lütfen token'ı istemci tarafında kaldırın." });
+    }
 }

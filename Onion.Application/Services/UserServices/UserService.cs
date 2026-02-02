@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Onion.Application.Model.DTO_s;
 using Onion.Domain.Models;
@@ -66,6 +66,11 @@ namespace Onion.Application.Services.UserServices
         public async Task<User> GetUserByIdAsync(int id)
         {
             return await _userManager.FindByIdAsync(id.ToString());
+        }
+
+        public async Task<IList<string>> GetRolesForUserAsync(User user)
+        {
+            return await _userManager.GetRolesAsync(user);
         }
 
         // Oturum açmış kullanıcının ID'sini getir

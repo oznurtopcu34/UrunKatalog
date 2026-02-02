@@ -9,19 +9,9 @@ namespace Onion.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class AuthController : ControllerBase
+public class AuthController(IUserService userService, ITokenService tokenService, IConfiguration configuration) : ControllerBase
 {
-    private readonly IUserService _userService;
-    private readonly ITokenService _tokenService;
-    private readonly IConfiguration _configuration;
-
-    public AuthController(IUserService userService, ITokenService tokenService, IConfiguration configuration)
-    {
-        _userService = userService;
-        _tokenService = tokenService;
-        _configuration = configuration;
-    }
-
+  
     /// <summary>
     /// Kullanıcı adı/e-posta ve şifre ile giriş yapar; JWT token döner.
     /// </summary>
@@ -36,14 +26,14 @@ public class AuthController : ControllerBase
         if (string.IsNullOrWhiteSpace(login?.UserNameOrEmail) || string.IsNullOrWhiteSpace(login.Password))
             return BadRequest("Kullanıcı adı/e-posta ve şifre gerekli.");
 
-        var user = await _userService.LoginAsync(login);
+        var user = await userService.LoginAsync(login);
         if (user == null)
             return Unauthorized("Kullanıcı adı/e-posta veya şifre hatalı.");
 
-        var roles = await _userService.GetRolesForUserAsync(user);
-        var token = _tokenService.GenerateToken(user, roles);
+        var roles = await userService.GetRolesForUserAsync(user);
+        var token = tokenService.GenerateToken(user, roles);
 
-        var expirationMinutes = int.Parse(_configuration["JwtSettings:ExpirationInMinutes"] ?? "60");
+        var expirationMinutes = int.Parse(configuration["JwtSettings:ExpirationInMinutes"] ?? "60");
         var expiresAt = DateTime.UtcNow.AddMinutes(expirationMinutes);
 
         return Ok(new LoginResponse_DTO

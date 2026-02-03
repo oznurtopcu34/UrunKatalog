@@ -1,66 +1,78 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Onion.Application.Model.DTO_s;
+using Onion.Application.Services.PaginationService;
 using Onion.Domain.Models;
 using Onion.Domain.Repositories;
 
 namespace Onion.Application.Services.ProductServices
 {
-    public class ProductService:IProductService
+    public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IPaginationService _paginationService;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper, ICategoryRepository categoryRepository)
+        public ProductService(
+            IProductRepository productRepository,
+            IMapper mapper,
+            ICategoryRepository categoryRepository,
+            IPaginationService paginationService)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
+            _paginationService = paginationService;
         }
 
-        // Yeni bir ürün ekler
         public async Task<bool> AddProductAsync(ProductAdd_DTO product)
         {
-            var productEntity = _mapper.Map<Product>(product); 
-            return await _productRepository.AddAsync(productEntity) > 0;
+            var entity = _mapper.Map<Product>(product);
+            return await _productRepository.AddAsync(entity) > 0;
         }
 
-        // Mevcut bir ürünü günceller
         public async Task<bool> UpdateProductAsync(ProductUpdate_DTO product)
         {
-            var existingProduct = await _productRepository.GetByIdAsync(product.ProductID);
-            if (existingProduct == null) return false;
-
-            _mapper.Map(product, existingProduct); // DTO -> Mevcut Entity güncellemesi
-            await _productRepository.UpdateAsync(existingProduct);
-
+            var existing = await _productRepository.GetByIdAsync(product.ProductID);
+            if (existing == null) return false;
+            _mapper.Map(product, existing);
+            await _productRepository.UpdateAsync(existing);
             return true;
         }
 
-        // Belirtilen ID'ye sahip bir ürünü siler
         public async Task<bool> DeleteProductAsync(int productId)
         {
             var product = await _productRepository.GetByIdAsync(productId);
             if (product == null) return false;
-
             await _productRepository.DeleteAsync(productId);
             return true;
         }
 
-        // Belirtilen ID'ye sahip bir ürünün bilgilerini getirir
         public async Task<ProductUpdate_DTO> GetProductByIdAsync(int id)
         {
             var product = await _productRepository.GetByIdAsync(id);
-            return _mapper.Map<ProductUpdate_DTO>(product); // Entity -> DTO dönüşümü
+            return _mapper.Map<ProductUpdate_DTO>(product);
         }
 
-        // Tüm ürünlerin listesini getirir
         public async Task<List<ProductUpdate_DTO>> GetAllProductsAsync()
         {
             var products = await _productRepository.GetAllAsync();
-            var categories = await _categoryRepository.GetAllAsync(); // Kategorileri al
+            var categories = await _categoryRepository.GetAllAsync();
+            return MapToProductDtos(products, categories);
+        }
 
-            var productDTOs = products.Select(p => new ProductUpdate_DTO
+        public async Task<PagedResult_DTO<ProductUpdate_DTO>> GetAllProductsAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var (items, totalCount) = await _productRepository.GetPagedAsync(page, pageSize, cancellationToken);
+            var categories = await _categoryRepository.GetAllAsync();
+            var dtos = MapToProductDtos(items, categories);
+            return _paginationService.CreatePagedResult(dtos, totalCount, page, pageSize);
+        }
+
+        private static List<ProductUpdate_DTO> MapToProductDtos(IEnumerable<Product> products, IEnumerable<Category> categories)
+        {
+            var categoryList = categories.ToList();
+            return products.Select(p => new ProductUpdate_DTO
             {
                 ProductID = p.ProductID,
                 ProductName = p.ProductName,
@@ -68,12 +80,9 @@ namespace Onion.Application.Services.ProductServices
                 Price = p.Price,
                 Stock = p.Stock,
                 CategoryID = p.CategoryID,
-                CategoryName = categories.FirstOrDefault(c => c.CategoryID == p.CategoryID)?.CategoryName, // Kategori adı
-                Image = p.Image // Resim ekleniyor
+                CategoryName = categoryList.FirstOrDefault(c => c.CategoryID == p.CategoryID)?.CategoryName,
+                Image = p.Image
             }).ToList();
-
-            return productDTOs;
-
         }
     }
 }

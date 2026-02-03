@@ -29,19 +29,15 @@ namespace Onion.UIWebApp.Controllers
             _mapper = mapper;
         }
 
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
-            Thread.Sleep(10000);
-            
-            SentrySdk.CaptureMessage("Hello Sentry");
-            var products=await _productService.GetAllProductsAsync();
-            return View(products);
+            var paged = await _productService.GetAllProductsAsync(page, pageSize);
+            return View(paged);
         }
-        public async Task<IActionResult> Catalog()
+        public async Task<IActionResult> Catalog(int page = 1, int pageSize = 3)
         {
-            // Tüm ürünleri ve kategorileri içeren DTO'yu alýyoruz
-            var products = await _productService.GetAllProductsAsync();
-            return View(products);  // View'a gönderiyoruz
+            var paged = await _productService.GetAllProductsAsync(page, pageSize);
+            return View(paged);
         }
         public async Task<IActionResult> ProductDetail(int id)
         {
@@ -64,27 +60,27 @@ namespace Onion.UIWebApp.Controllers
 
      
 
-        // Üye giriþ kontrolü ile sepete ürün ekleme
+        // ?ye giri? kontrol? ile sepete ?r?n ekleme
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddToCart(int productId, int quantity)
         {
             var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
             await _cartService.AddToCartAsync(productId, userId, quantity); // Sepete ekle
-            return RedirectToAction("ViewCart"); // Sepeti görüntüleme sayfasýna yönlendir
+            return RedirectToAction("ViewCart"); // Sepeti g?r?nt?leme sayfas?na y?nlendir
         }
 
-        // Sepeti görüntüleme
+        // Sepeti g?r?nt?leme
         [Authorize]
         public async Task<IActionResult> ViewCart()
         {
             var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-            var cart = await _cartService.GetCartByUserIdAsync(userId); // Kullanýcýnýn sepetini al
+            var cart = await _cartService.GetCartByUserIdAsync(userId); // Kullan?c?n?n sepetini al
             if (cart == null)
             {
-                return View(new Cart_VM()); // Kullanýcýnýn sepeti boþsa boþ bir model dön
+                return View(new Cart_VM()); // Kullan?c?n?n sepeti bo?sa bo? bir model d?n
             }
-            var totalPrice = await _cartService.GetCartTotalPriceAsync(userId); // Toplam fiyatý al
+            var totalPrice = await _cartService.GetCartTotalPriceAsync(userId); // Toplam fiyat? al
 
             var viewModel = new Cart_VM
             {
@@ -98,17 +94,17 @@ namespace Onion.UIWebApp.Controllers
                 TotalPrice = totalPrice
             };
 
-            return View(viewModel); // Sepet view'ine gönder
+            return View(viewModel); // Sepet view'ine g?nder
         }
 
-        // Sepetten ürün silme
+        // Sepetten ?r?n silme
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> RemoveFromCart(int cartItemId)
         {
             var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value);
-            await _cartService.RemoveFromCartAsync(cartItemId, userId); // Sepetten ürünü sil
-            return RedirectToAction("ViewCart"); // Sepeti yeniden görüntüle
+            await _cartService.RemoveFromCartAsync(cartItemId, userId); // Sepetten ?r?n? sil
+            return RedirectToAction("ViewCart"); // Sepeti yeniden g?r?nt?le
         }
 
 
@@ -122,19 +118,19 @@ namespace Onion.UIWebApp.Controllers
             var cart = await _cartService.GetCartByUserIdAsync(userId);
             if (cart == null || !cart.CartItems.Any())
             {
-                TempData["Error"] = "Sepetiniz boþ.";
+                TempData["Error"] = "Sepetiniz bo?.";
                 return RedirectToAction("ViewCart");
             }
 
-            // Stok kontrolü ve stok azaltma
+            // Stok kontrol? ve stok azaltma
             var purchaseResult = await _cartService.PurchaseCartAsync(userId);
             if (!purchaseResult)
             {
-                TempData["Error"] = "Satýn alma iþlemi baþarýsýz. Ürün stoklarýný kontrol edin.";
+                TempData["Error"] = "Sat?n alma i?lemi ba?ar?s?z. ?r?n stoklar?n? kontrol edin.";
                 return RedirectToAction("ViewCart");
             }
 
-            TempData["Success"] = "Satýn alma iþlemi baþarýyla tamamlandý.";
+            TempData["Success"] = "Sat?n alma i?lemi ba?ar?yla tamamland?.";
             return RedirectToAction("ViewCart");
         }
 

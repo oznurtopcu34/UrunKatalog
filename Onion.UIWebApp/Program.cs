@@ -20,7 +20,7 @@ using Onion.Application.Services.BlogPostService;
 using Onion.Application.Services.FAQService;
 using Onion.Application.Services.ComplaintService;
 using Onion.Application.Services.BidService;
-
+using Onion.Application.Services.PaginationService;
 
 
 
@@ -63,7 +63,7 @@ builder.Services.AddTransient<INewsService, NewsService>();
 builder.Services.AddTransient<IFAQService, FAQService>();
 builder.Services.AddTransient<IComplaintService, ComplaintService>();
 builder.Services.AddTransient<IBidService, BidService>();
-
+builder.Services.AddTransient<IPaginationService, PaginationService>();
 
 builder.Services.AddTransient<ICartItemRepository,CartItemRepository>();
 builder.Services.AddTransient<ICartRepository,CartRepository>();

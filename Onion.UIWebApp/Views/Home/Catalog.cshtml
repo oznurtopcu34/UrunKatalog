@@ -1,8 +1,8 @@
-﻿@model List<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
+@model Onion.Application.Model.DTO_s.PagedResult_DTO<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
 
 <div id="modernCarousel" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        @foreach (var product in Model.Select((p, i) => new { Product = p, Index = i }))
+        @foreach (var product in Model.Items.Select((p, i) => new { Product = p, Index = i }))
         {
             <div class="carousel-item @(product.Index == 0 ? "active" : "")">
                 <div class="d-flex justify-content-center align-items-center" style="height: 90vh; background-color: #fef5e7;">
@@ -37,7 +37,20 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
+@if (Model.TotalPages > 1)
+{
+    <div class="d-flex justify-content-center align-items-center gap-2 my-4">
+        @if (Model.HasPreviousPage)
+        {
+            <a asp-action="Catalog" asp-route-page="@(Model.Page - 1)" asp-route-pageSize="@Model.PageSize" class="btn btn-outline-primary">Önceki</a>
+        }
+        <span class="align-self-center">Sayfa @Model.Page / @Model.TotalPages (Toplam @Model.TotalCount ürün)</span>
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Catalog" asp-route-page="@(Model.Page + 1)" asp-route-pageSize="@Model.PageSize" class="btn btn-outline-primary">Sonraki</a>
+        }
+    </div>
+}
 <!-- Stil -->
 <style>
     /* Görsel Zoom-in Animasyonu */

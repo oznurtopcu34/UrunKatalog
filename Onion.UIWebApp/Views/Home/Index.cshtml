@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
+@model Onion.Application.Model.DTO_s.PagedResult_DTO<Onion.Application.Model.DTO_s.ProductUpdate_DTO>
 
 <!DOCTYPE html>
 <html lang="tr">
@@ -144,7 +144,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
@@ -172,5 +172,16 @@
             }
         </tbody>
     </table>
+    <div style="text-align: center; margin: 20px 0; font-size: 18px;">
+        @if (Model.HasPreviousPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-pageSize="@Model.PageSize" class="button-link" style="margin-right: 15px;">Önceki</a>
+        }
+        <span>Sayfa @Model.Page / @Model.TotalPages (Toplam @Model.TotalCount ürün)</span>
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-pageSize="@Model.PageSize" class="button-link" style="margin-left: 15px;">Sonraki</a>
+        }
+    </div>
 </body>
 </html>

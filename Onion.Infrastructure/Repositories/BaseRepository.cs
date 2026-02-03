@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Onion.Domain.Abstract;
 using Onion.Domain.Enums;
@@ -77,6 +77,27 @@ namespace Onion.Infrastructure.Repositories
             if (!all)
                 return await _table.Where(e => e.RecordStatus != RecordStatus.Deleted).ToListAsync();
             return await _table.ToListAsync();
+        }
+
+        public async Task<(IEnumerable<TEntity> Items, int TotalCount)> GetPagedAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+        {
+            var query = _table
+                .AsNoTracking()
+                .Where(e => e.RecordStatus != RecordStatus.Deleted);
+
+            var totalCount = await query.CountAsync(cancellationToken);
+
+            var keyProperty = _context.Model.FindEntityType(typeof(TEntity))?.FindPrimaryKey()?.Properties?.FirstOrDefault()?.Name;
+            IOrderedQueryable<TEntity> orderedQuery = keyProperty != null
+                ? query.OrderBy(e => EF.Property<int>(e, keyProperty))
+                : query.OrderBy(e => e.CreatedDate);
+
+            var items = await orderedQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(cancellationToken);
+
+            return (items, totalCount);
         }
     }
 }

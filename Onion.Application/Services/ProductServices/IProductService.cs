@@ -1,4 +1,4 @@
-﻿using Onion.Application.Model.DTO_s;
+using Onion.Application.Model.DTO_s;
 
 namespace Onion.Application.Services.ProductServices
 {
@@ -16,8 +16,14 @@ namespace Onion.Application.Services.ProductServices
         // Belirtilen ID'ye sahip bir ürünün bilgilerini getirir.
         Task<ProductUpdate_DTO> GetProductByIdAsync(int id);
 
-        // Tüm ürünlerin listesini getirir.
+        /// <summary>
+        /// Tüm ürünler (sayfalandırma yok). Panel vb. için.
+        /// </summary>
         Task<List<ProductUpdate_DTO>> GetAllProductsAsync();
 
+        /// <summary>
+        /// Tüm ürünler sayfalı. İçeride IPaginationService.CreatePagedResult çağrılır.
+        /// </summary>
+        Task<PagedResult_DTO<ProductUpdate_DTO>> GetAllProductsAsync(int page, int pageSize, CancellationToken cancellationToken = default);
     }
 }

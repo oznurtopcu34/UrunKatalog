@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Onion.Application.Services.CacheService;
 using Onion.Application.Services.Tokenservice;
 using Onion.Application.Services.UserServices;
 using Onion.Domain.Models;
@@ -40,7 +41,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Redis distributed cache
+var redisConnection = builder.Configuration.GetConnectionString("Redis");
+if (!string.IsNullOrEmpty(redisConnection))
+{
+    builder.Services.AddStackExchangeRedisCache(options =>
+    {
+        options.Configuration = redisConnection;
+    });
+}
+else
+{
+    builder.Services.AddDistributedMemoryCache(); // Redis yoksa memory cache (geliştirme için)
+}
+
 // Application services
+builder.Services.AddTransient<ICacheService, CacheService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 

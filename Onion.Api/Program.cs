@@ -3,10 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Onion.Application.Services.CacheService;
+using Onion.Application.Services.PaginationService;
+using Onion.Application.Services.ProductServices;
 using Onion.Application.Services.Tokenservice;
 using Onion.Application.Services.UserServices;
 using Onion.Domain.Models;
+using Onion.Domain.Repositories;
 using Onion.Infrastructure.Data;
+using Onion.Infrastructure.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,9 +61,16 @@ else
 
 // Application services
 builder.Services.AddTransient<ICacheService, CacheService>();
+builder.Services.AddTransient<IPaginationService, PaginationService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddTransient<IProductService, ProductService>();
 
+// Repositories (ProductService için)
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 
 // Swagger + JWT Bearer tanımı

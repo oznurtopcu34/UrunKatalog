@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Onion.Application.Services.CacheService;
+using Onion.Application.Services.CategoryServise;
 using Onion.Application.Services.PaginationService;
 using Onion.Application.Services.ProductServices;
 using Onion.Application.Services.Tokenservice;
@@ -65,6 +66,7 @@ builder.Services.AddTransient<IPaginationService, PaginationService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 // Repositories (ProductService için)
 builder.Services.AddTransient<IProductRepository, ProductRepository>();

@@ -64,6 +64,45 @@ public class CategoriesController(ICategoryService categoryService) : Controller
     }
 
     /// <summary>
+    /// Kategori günceller. Sadece Manager ve ContentManager erişebilir.
+    /// </summary>
+    [HttpPut("{id:int}")]
+    [Authorize(Roles = "Manager,ContentManager")]
+    [ProducesResponseType(typeof(Category_DTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<Category_DTO>> Update(int id, [FromBody] Category_DTO category)
+    {
+        if (id != category.CategoryID)
+            return BadRequest("URL'deki ID ile body'deki CategoryID eşleşmiyor.");
+
+        if (string.IsNullOrWhiteSpace(category?.CategoryName))
+            return BadRequest("Kategori adı gerekli.");
+
+        var existing = await categoryService.GetCategoryByIdAsync(id);
+        if (existing == null)
+            return NotFound("Kategori bulunamadı.");
+
+        var duplicate = await categoryService.GetCategoryByNameAsync(category.CategoryName.Trim());
+        if (duplicate != null && duplicate.CategoryID != id)
+            return BadRequest("Bu isimde başka bir kategori zaten mevcut.");
+
+        var updated = await categoryService.UpdateCategoryAsync(new Category_DTO 
+        { 
+            CategoryID = id, 
+            CategoryName = category.CategoryName.Trim() 
+        });
+        
+        if (!updated)
+            return StatusCode(StatusCodes.Status500InternalServerError, "Kategori güncellenirken hata oluştu.");
+
+        var result = await categoryService.GetCategoryByIdAsync(id);
+        return Ok(result);
+    }
+
+    /// <summary>
     /// ID'ye göre kategori siler. Sadece Manager ve ContentManager erişebilir.
     /// </summary>
     [HttpDelete("{id:int}")]

@@ -21,4 +21,67 @@ public class CategoriesController(ICategoryService categoryService) : Controller
         var categories = await categoryService.GetAllCategoriesAsync();
         return Ok(categories);
     }
+
+    /// <summary>
+    /// ID'ye göre kategori getirir. Herkes erişebilir.
+    /// </summary>
+    [HttpGet("{id:int}")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(Category_DTO), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Category_DTO>> GetById(int id)
+    {
+        var category = await categoryService.GetCategoryByIdAsync(id);
+        if (category == null)
+            return NotFound("Kategori bulunamadı.");
+        return Ok(category);
+    }
+
+    /// <summary>
+    /// Yeni kategori ekler. Sadece Manager ve ContentManager erişebilir.
+    /// </summary>
+    [HttpPost]
+    [Authorize(Roles = "Manager,ContentManager")]
+    [ProducesResponseType(typeof(Category_DTO), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<Category_DTO>> Add([FromBody] Category_DTO category)
+    {
+        if (string.IsNullOrWhiteSpace(category?.CategoryName))
+            return BadRequest("Kategori adı gerekli.");
+
+        var existing = await categoryService.GetCategoryByNameAsync(category.CategoryName.Trim());
+        if (existing != null)
+            return BadRequest("Bu isimde bir kategori zaten mevcut.");
+
+        var added = await categoryService.AddCategoryAsync(new Category_DTO { CategoryName = category.CategoryName.Trim() });
+        if (!added)
+            return StatusCode(StatusCodes.Status500InternalServerError, "Kategori eklenirken hata oluştu.");
+
+        var created = await categoryService.GetCategoryByNameAsync(category.CategoryName.Trim());
+        return CreatedAtAction(nameof(GetById), new { id = created.CategoryID }, created);
+    }
+
+    /// <summary>
+    /// ID'ye göre kategori siler. Sadece Manager ve ContentManager erişebilir.
+    /// </summary>
+    [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Manager,ContentManager")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var category = await categoryService.GetCategoryByIdAsync(id);
+        if (category == null)
+            return NotFound("Kategori bulunamadı.");
+
+        var deleted = await categoryService.DeleteCategoryAsync(id);
+        if (!deleted)
+            return StatusCode(StatusCodes.Status500InternalServerError, "Kategori silinirken hata oluştu.");
+
+        return NoContent();
+    }
 }

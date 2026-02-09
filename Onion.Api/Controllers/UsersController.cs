@@ -26,13 +26,16 @@ public class UsersController(IUserService userService) : ControllerBase
         if (user == null)
             return Unauthorized();
 
+        var roles = await userService.GetRolesForUserAsync(user);
+
         var dto = new ProfileUpdate_DTO
         {
             UserID = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
             Email = user.Email,
-            UserName = user.UserName
+            UserName = user.UserName,
+            Roles = roles
         };
 
         return Ok(dto);

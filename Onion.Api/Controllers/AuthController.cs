@@ -47,6 +47,30 @@ public class AuthController(IUserService userService, ITokenService tokenService
     }
 
     /// <summary>
+    /// Normal kullanıcı kaydı yapar. Otomatik olarak 'User' rolü atanır.
+    /// </summary>
+    [HttpPost("register")]
+    [AllowAnonymous]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Register([FromBody] UserAdd_DTO user)
+    {
+        if (user == null ||
+            string.IsNullOrWhiteSpace(user.UserName) ||
+            string.IsNullOrWhiteSpace(user.Email) ||
+            string.IsNullOrWhiteSpace(user.Password))
+        {
+            return BadRequest("Kullanıcı adı, e-posta ve şifre gerekli.");
+        }
+
+        var created = await userService.AddUserAsync(user);
+        if (!created)
+            return BadRequest("Kullanıcı oluşturulamadı.");
+
+        return StatusCode(StatusCodes.Status201Created);
+    }
+
+    /// <summary>
     /// Çıkış yapar. İstemci tarafında token'ı (localStorage, cookie vb.) silmeniz gerekir.
     /// </summary>
     [HttpPost("logout")]
@@ -58,4 +82,37 @@ public class AuthController(IUserService userService, ITokenService tokenService
         // JWT stateless olduğu için sunucuda token iptal edilmez; istemci token'ı silmeli.
         return Ok(new { message = "Çıkış yapıldı. Lütfen token'ı istemci tarafında kaldırın." });
     }
+
+    /// <summary>
+    /// Manager rolündeki kullanıcıların yeni kullanıcı oluşturup rol atamasını sağlar.
+    /// </summary>
+    [HttpPost("admin/register")]
+    [Authorize(Roles = "Manager")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> AdminRegister([FromBody] AdminRegisterRequest request)
+    {
+        if (request?.User == null ||
+            string.IsNullOrWhiteSpace(request.User.UserName) ||
+            string.IsNullOrWhiteSpace(request.User.Email) ||
+            string.IsNullOrWhiteSpace(request.User.Password))
+        {
+            return BadRequest("Kullanıcı adı, e-posta ve şifre gerekli.");
+        }
+
+        if (request.Roles == null || request.Roles.Count == 0)
+        {
+            return BadRequest("En az bir rol belirtilmelidir.");
+        }
+
+        var created = await userService.CreateUserWithRolesAsync(request.User, request.Roles);
+        if (!created)
+            return BadRequest("Kullanıcı veya roller oluşturulurken hata oluştu.");
+
+        return StatusCode(StatusCodes.Status201Created);
+    }
+
+    public record AdminRegisterRequest(UserAdd_DTO User, List<string> Roles);
 }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Onion.Application.Model.DTO_s;
 using Onion.Domain.Models;
 using System.Security.Claims;
+using System.Linq;
 
 namespace Onion.Application.Services.UserServices
 {
@@ -16,8 +17,14 @@ namespace Onion.Application.Services.UserServices
             _userManager = userManager;
         }
 
-        // Yeni kullanıcı ekleme işlemi
+        // Yeni kullanıcı ekleme işlemi (varsayılan olarak yalnızca "User" rolü atanır)
         public async Task<bool> AddUserAsync(UserAdd_DTO user)
+        {
+            return await CreateUserWithRolesAsync(user, new[] { "User" });
+        }
+
+        // Belirtilen rollerle yeni kullanıcı ekleme işlemi
+        public async Task<bool> CreateUserWithRolesAsync(UserAdd_DTO user, IEnumerable<string> roles)
         {
             var newUser = new User
             {
@@ -29,11 +36,24 @@ namespace Onion.Application.Services.UserServices
 
             var result = await _userManager.CreateAsync(newUser, user.Password);
 
-            if (result.Succeeded)            
-                await _userManager.AddToRoleAsync(newUser, "User"); // Kullanıcıya "User" rolü atanır
-            
+            if (!result.Succeeded)
+                return false;
 
-            return result.Succeeded; // İşlem başarılıysa true döner
+            if (roles is null)
+                return true;
+
+            foreach (var role in roles.Distinct())
+            {
+                var roleResult = await _userManager.AddToRoleAsync(newUser, role);
+                if (!roleResult.Succeeded)
+                {
+                    // Rol ataması başarısız olursa kullanıcıyı geri al
+                    await _userManager.DeleteAsync(newUser);
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         // Kullanıcı giriş işlemi

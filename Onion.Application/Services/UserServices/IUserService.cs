@@ -7,7 +7,8 @@ namespace Onion.Application.Services.UserServices
     public interface IUserService
     {
         Task<Dictionary<int, User>> GetUsersByIdsAsync(List<int> userIds); //Belirtilen ID'lere sahip kullanıcıları getirir.
-        Task<bool> AddUserAsync(UserAdd_DTO user);       // Yeni kullanıcı ekler
+        Task<bool> AddUserAsync(UserAdd_DTO user);       // Yeni kullanıcı ekler (varsayılan olarak "User" rolü atanır)
+        Task<bool> CreateUserWithRolesAsync(UserAdd_DTO user, IEnumerable<string> roles); // Belirtilen rollerle yeni kullanıcı ekler
         Task<User> LoginAsync(UserLogin_DTO login);      // Kullanıcı giriş işlemini gerçekleştirir
         Task<int> GetUserIdAsync(ClaimsPrincipal claims); // Oturum açmış kullanıcının ID'sini getirir
         Task<User> GetUserByIdAsync(int id);             // Kullanıcıyı ID'ye göre getirir

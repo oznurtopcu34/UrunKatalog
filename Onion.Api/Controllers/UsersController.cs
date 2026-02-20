@@ -33,8 +33,8 @@ public class UsersController(IUserService userService) : ControllerBase
             UserID = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Email = user.Email,
-            UserName = user.UserName,
+            Email = user.Email!,
+            UserName = user.UserName!,
             Roles = roles
         };
 
@@ -79,12 +79,13 @@ public class UsersController(IUserService userService) : ControllerBase
             FirstName = string.IsNullOrWhiteSpace(model.FirstName) ? user.FirstName : model.FirstName,
             LastName = string.IsNullOrWhiteSpace(model.LastName) ? user.LastName : model.LastName,
             Email = targetEmail,
-            UserName = string.IsNullOrWhiteSpace(model.UserName) ? user.UserName : model.UserName
+            UserName = string.IsNullOrWhiteSpace(model.UserName) ? user.UserName! : model.UserName!
         };
 
         var updated = await userService.UpdateUserAsync(updateDto);
         if (!updated)
             return BadRequest("Profil güncellenemedi.");
+
 
         // Güncel kullanıcı ve rollerini tekrar oku
         user = await userService.GetUserByIdAsync(userId);
@@ -95,8 +96,8 @@ public class UsersController(IUserService userService) : ControllerBase
             UserID = user.Id,
             FirstName = user.FirstName,
             LastName = user.LastName,
-            Email = user.Email,
-            UserName = user.UserName,
+            Email = user.Email!,
+            UserName = user.UserName!,
             Roles = roles
         };
 

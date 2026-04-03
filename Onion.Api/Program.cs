@@ -12,9 +12,12 @@ using Onion.Domain.Models;
 using Onion.Domain.Repositories;
 using Onion.Infrastructure.Data;
 using Onion.Infrastructure.Repositories;
+using Onion.Api.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<ProductImageStorage>();
 
 // DbContext & Identity
 builder.Services.AddDbContext<ProductDbContext>(x =>
@@ -110,6 +113,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
